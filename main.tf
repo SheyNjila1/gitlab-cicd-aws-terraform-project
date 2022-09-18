@@ -6,7 +6,8 @@ provider "aws" {
 
 # Create vpc
 module "vpc" {
-  source                       = "../modules/vpc"
+  #source                       = "../modules/vpc"
+  source                       = "./vpc"
   region                       = var.region
   vpc_cidr                     = var.vpc_cidr
   project_name                 = var.project_name
@@ -21,7 +22,8 @@ module "vpc" {
 
 # Create Nat Gateways
 module "nat_gateway" {
-  source                     = "../modules/nat-gateway"
+  #source                     = "../modules/nat-gateway"
+  source                     = "./nat-gateway"
   public_web_subnet_az1_id   = module.vpc.public_web_subnet_az1_id
   internet_gateway           = module.vpc.internet_gateway
   public_web_subnet_az2_id   = module.vpc.public_web_subnet_az2_id
@@ -32,10 +34,20 @@ module "nat_gateway" {
   private_data_subnet_az2_id = module.vpc.private_data_subnet_az2_id
 }
 
-# Create Security Groups
-module "security_group" {
-  source = "../modules/security-groups"
-  vpc_id = module.vpc.vpc_id
+# # Create Security Groups
+# module "security-groups" {
+#   # source = "../modules/security-groups"
+#   source = "./security-groups"
+#   vpc_id = vpc.vpc_id
 
-}
+# }
+
+# Create Autoscaling
+#module "autoscaling" {
+  # source = "../modules/autoscaling"
+  #source = "./autoscaling"
+  # source = 
+  #vpc_id = vpc.vpc_id
+
+#}
 
